@@ -4,7 +4,6 @@ function getApi(url) {
     fetch(url)
     .then(response => response.json())
     .then(response => console.log(response.results[0].poster_path))
-    // .then(response => console.log(response))
     .catch(err => console.error(err));
 };
 
