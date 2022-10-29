@@ -7,5 +7,4 @@ function getApi(url) {
     .catch(err => console.error(err));
 };
 
-// getApi(requestUrl);
 getApi(requestUrl1)
