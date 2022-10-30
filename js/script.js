@@ -7,14 +7,13 @@ var tmdbGetRecommendationsUrl = 'https://api.themoviedb.org/3/movie/';
 
 //Element variables in order to appendchild and add the searched movie/TV show Card and similar Movie/TV show recommendation Cards
 var userSearchInput = document.querySelector('#userSearchInput');
-var userSearchForm = document.querySelector('userSearchForm');
+var userSearchForm = document.querySelector('#userSearchForm');
 var searchBtn = document.querySelector('#searchBtn');
 var searchedMovieCard = document.querySelector('#searchedMovieCard');
 var similarMovieCards = document.querySelector('#similarMovieCards');
 
 //Create an event handler for when the user clicks the search button
 var searchButtonHandler = function(event) {
-    console.log("button works");
     event.preventDefault();
     //Get the value of the users search
     var userSearchValue = userSearchInput.value.trim();
@@ -44,7 +43,6 @@ function getMovieId(userSearchValue) {
         .then(function (response) {
             console.log(response);
         });
-}
+};
 
-//Create event listener for user click the search button
 userSearchForm.addEventListener("submit", searchButtonHandler);
