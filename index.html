@@ -23,28 +23,29 @@
 <body class="h-100">
     <!-- Container for Search Input/Button -->
     <section class="container">
-        <section class="row justify-content-center" id="">
+        <form class="row justify-content-center" id="userSearchForm">
             <!-- User Text Input -->
-            <input class="col-10" id="" type="text">
+            <input class="col-10" id="userSearchInput" type="text">
             <!-- Search Button -->
-            <button class="col-2 btn btn-danger" id="">Search<i class="fas fa-search float-right pt-1"></i></button>
-        </section>
+            <button type="submit" class="col-2 btn btn-danger" id="searchBtn">Search<i class="fas fa-search float-right pt-1"></i></button>
+        </form>
     </section>
 
     <!-- Container for Search Results Card(s) (Should be hidden until user the hits search button) -->
-    <section class="container" id="">    
+    <section class="container" id="searchedMovieCard">    
         <section class="row" id="" style="display: none;">
         
         </section>
     </section>    
 
     <!-- Container for Movie/TV Show Review Card(s) (Should be hidden until user hits the search button) -->
-    <section class="container" id="">    
+    <section class="container" id="similarMovieCards">    
         <section class="row" id="" style="display: none;">
         
         </section>
     </section>
 
+    <script src="./js/script.js"></script>
 </body>
 
 <!-- Footer (in case we want to add our names or something) -->
