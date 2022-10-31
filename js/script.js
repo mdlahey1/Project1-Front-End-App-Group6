@@ -39,10 +39,9 @@ var searchButtonHandler = function(event) {
         searchHistoryCard.classList.remove("hidden");
 
         //Call the getMovieID function and reset the search text area to blank
-        getMovieId(userSearchValue);
-        userSearchInput.value = "";
+        getSearchedMovie(userSearchValue);
         //Reset the search input to blank
-        userSearchInput.value = ""
+        userSearchInput.value = "";
     } 
     //Need to update this to be a modal instead of an alert but using that as a placeholder for now
     else {
@@ -51,7 +50,7 @@ var searchButtonHandler = function(event) {
 };
 
 //Create a function that will return the Movie ID
-function getMovieId(userSearchValue) {
+function getSearchedMovie(userSearchValue) {
     //Update the root URL to incorporate the API key and User Search Value
     var fetchUrl = tmdbGetIdUrl + apiKey + "&query=" + userSearchValue;
     fetch(fetchUrl)
