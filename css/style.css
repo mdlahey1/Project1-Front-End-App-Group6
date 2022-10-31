@@ -6,6 +6,7 @@
     --hoverColor: #DA0000;
     --light-dark: #940000;
     --dark:#0a0a0a;
+    --mid-dark:#181818;
     --background: #232323;
     --border-radius: .3rem;
 }
@@ -19,10 +20,9 @@
 .btn {
     font-size: 1.3rem;
     text-decoration:none;
-    padding: 6px 5px;
+    padding: 6px 10px;
     width: 100%;
     display: block;
-    margin: 5px 0;
     border-radius: var(--border-radius);
     color: var(--primary);
     border: none;
@@ -49,8 +49,11 @@
     height: 30vw;
 }
 
+.col {
+    padding:0px;
+}
 .card-body {
-    background-color: var(--background);
+    background-color: var(--mid-dark);
 }
 
 
@@ -81,11 +84,14 @@ h2 {
     font-size: 24px;
 }
 
+h5 {
+    text-align:center;
+}
 
 footer {
     background-color: var(--background);
     color: var(--primary);
     height:200px;
     margin-top: 100px;
-    font-size: 24px;
+    font-size: 16px;
 }
