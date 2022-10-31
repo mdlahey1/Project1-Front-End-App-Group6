@@ -41,7 +41,6 @@ function displayPoster(posterResults) {
 
         var movieID = posterResults[i].id;
         var fetchProv = `https://api.themoviedb.org/3/movie/${movieID}/watch/providers?api_key=a6091da1f77938caf706363106cf0289`;
-        console.log(i);
         getStreaming(fetchProv, i);
         
         posterContainer.append(card);
