@@ -7,6 +7,7 @@ var tmdbGetRecommendationsUrl = 'https://api.themoviedb.org/3/movie/';
 
 //Element variables in order to appendchild and add the searched movie/TV show Card and similar Movie/TV show recommendation Cards
 var userSearchInput = document.querySelector('#userSearchInput');
+console.log(userSearchInput);
 var userSearchForm = document.querySelector('#userSearchForm');
 var searchBtn = document.querySelector('#searchBtn');
 var searchHistoryCard = document.querySelector('#searchHistoryCard');
@@ -52,7 +53,7 @@ var searchButtonHandler = function(event) {
 };
 
 //Create a function that will return the Movie ID
-function getSearchedMovie(userSearchValue) {
+function getSearchedMovie(userSearchValue) {  
     //Update the root URL to incorporate the API key and User Search Value
     var fetchUrl = tmdbGetIdUrl + apiKey + "&query=" + userSearchValue;
     fetch(fetchUrl)
@@ -97,7 +98,12 @@ function getSearchedMovie(userSearchValue) {
 };
 
 function displayRecommendations(response) {
-    console.log(response);
+    //Delete existing recommendation elements if you had done a previous search
+    var existingElCheck = document.querySelector('#recommendationCards');
+    if (existingElCheck) {
+        recommendationSection.innerHTML = "";
+    };   
+
     //Create a for loop to go through the array of recommendations
     for (i = 0; i < 5; i++) {
         //update variables
