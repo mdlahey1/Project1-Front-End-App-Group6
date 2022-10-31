@@ -7,51 +7,83 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
   <link rel="stylesheet" href="./css/style.css">
+  <title>FlexDex</title>
   <script src="./js/script.js" defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <title>Movie & TV Lookup Application</title>
 </head>
 
-<!-- Header -->
-<header class="container" id="">
-    <section class="justify-content-center" id=""></section>
-        <!-- Main Text -->
-        <h1 class="text-center" id="">Streaming Availability Search Engine</h1>
-        <!-- Subheader (if needed) -->
-        <h2 class="text-center" id="">Search for a Movie or TV show to see where it's streaming and see reviews!</h2>
-    </section>
-</header>
-
-<body class="h-100">
-    <!-- Container for Search Input/Button -->
-    <section class="container">
-        <section class="row justify-content-center" id="">
-            <!-- User Text Input -->
-            <input class="col-10" id="" type="text">
-            <!-- Search Button -->
-            <button class="col-2 btn btn-danger" id="">Search<i class="fas fa-search float-right pt-1"></i></button>
+    <!-- Header -->
+    <header class="container" id="">
+        <section class="justify-content-center" id=""></section>
+            <!-- Main Text -->
+            <h1 class="text-center" id="">FlexDex</h1>
+            <!-- Subheader (if needed) -->
+            <h2 class="text-center" id="">Search for a Movie to see where it's streaming and other similar titles!</h2>
         </section>
-    </section>
+    </header>
 
-    <!-- Container for Search Results Card(s) (Should be hidden until user the hits search button) -->
-    <section class="container" id="">    
-        <section class="row" id="" style="display: none;">
+    <body class="">
+
+        <!-- Container for Search Input/Button -->
+        <section class="container p-5">
+            <form class="row justify-content-center" id="userSearchForm">
+                <!-- User Text Input -->
+                <input class="col-6 " id="userSearchInput" type="text">
+                <!-- Search Button -->
+                <button type="submit" class="col-2 btn" id="searchBtn">Search<i class="fas fa-search float-right pt-1"></i></button>
+            </form>
+        </section>
+
+        <!-- Container for Search Results Card & History Buttons-->
+        <section class="container pb-5", id="">
+            <section class="row" id="">
+                <!-- Main Search Results Movie Card -->
+                <section class="col hidden" id="searchedMovieCard">
+                    <section class="card h-100">
+                        <img src="" class="card-img-top mainSearchImage" id="searchedMovieImage">
+                        <section class="card-body" id="searchedMovieBody">
+                          <h5 class="card-title" id="searchedMovieTitle">Search Results</h5>
+                        </section>
+                    </section>
+                </section>
+                <!-- Search History Card -->
+                <section class="col hidden" id="searchHistoryCard">
+                    <section class="card h-100">
+                        <section class="card-body" id="searchHistoryButtons">
+                          <h5 class="card-title">Search History</h5>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+
+        <!-- Container for Recommendations based on User Search -->
+        <section class="container pb-5 hidden", id="recommendationCards">
+            <section class="row" id="">
+                <!-- Main Search Results Movie Card -->
+                <section class="col" id="">
+                    <section class="card h-100">
+                        <img src="..." class="card-img-top" alt="...">
+                        <section class="card-body">
+                          <h5 class="card-title">Recommended Movies</h5>
+                          <p class="card-text">This is where the Movie Recommendations Cards will go</p>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+
+        <!-- Footer (in case we want to add our names or something) -->
+        <footer class="container" id="">
+            <section class="justify-content-center" id="">
+                <h5 class="" id="">Brought to you By: Lexie Flock, Colin McMurtray, Emre Eyupoglu, Sean Fitzpatrick, and Matt Lahey</h5>
+            </section>
+        </footer>
         
-        </section>
-    </section>    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="./js/script.js"></script>
 
-    <!-- Container for Movie/TV Show Review Card(s) (Should be hidden until user hits the search button) -->
-    <section class="container" id="">    
-        <section class="row" id="" style="display: none;">
-        
-        </section>
-    </section>
-
-</body>
-
-<!-- Footer (in case we want to add our names or something) -->
-<footer class="container" id="">
-    <section class="justify-content-center" id="">
-        <h3 class="" id="">Brought to you By: Lexie Flock, Colin McMurtray, Emre Eyupoglu, Sean Fitzpatrick, and Matt Lahey</h3>
-    </section>
-</footer>
+    </body>
+</html>
