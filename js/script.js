@@ -29,12 +29,12 @@ var searchButtonHandler = function(event) {
         console.log(userSearchValue);
         //Save search in local storage and create search history button
         searchHistoryArr.push(userSearchValue);
-        localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr));
+        localStorage.setItem("movieHistory", JSON.stringify(searchHistoryArr));
         
         //Create a new button element and append it
         var newHistoryBtn = document.createElement('button');
         newHistoryBtn.className = "btn";
-        newHistoryBtn.setAttribute("movieName", userSearchValue);
+        newHistoryBtn.setAttribute("movieHistory", userSearchValue);
         newHistoryBtn.innerHTML = userSearchValue;
         searchHistoryButtons.appendChild(newHistoryBtn);
         searchHistoryCard.classList.remove("hidden");
@@ -146,4 +146,37 @@ function displayRecommendations(response) {
     }
 };
 
+//Function that pulls existing search history from local storage if applicable
+function loadHistory() {
+    var listOfMovies = window.localStorage.getItem("movieHistory");
+    console.log(listOfMovies);
+    if(listOfMovies) {
+        var existingHistory = JSON.parse(listOfMovies);
+        console.log(existingHistory);
+        for (i = 0; i < existingHistory.length; i++) {
+            var newBtn = document.createElement('button');
+            newBtn.className = "btn";
+            newBtn.setAttribute("id", existingHistory[i]);
+            newBtn.innerHTML = existingHistory[i];
+            searchHistoryButtons.appendChild(newBtn);
+            searchHistoryCard.classList.remove("hidden");
+        }
+    }
+};
+
+//Research a movie by hitting one of the search history buttons
+var searchHistoryClickHandler = function(event) {
+    var movieSearch = event.target.getAttribute("id");
+    if (movieSearch) {
+        getSearchedMovie(movieSearch);
+    };
+};
+
+//Event listener for when the user hits the search button
 userSearchForm.addEventListener("submit", searchButtonHandler);
+
+//Event listener for if the user hits one of the search history buttons
+searchHistoryButtons.addEventListener("click", searchHistoryClickHandler);
+
+//Call function that loads existing local storage if applicable
+loadHistory();
