@@ -8,8 +8,6 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"/>
   <link rel="stylesheet" href="./css/style.css">
   <title>FlexDex</title>
-  <script src="./js/script.js" defer></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <title>Movie & TV Lookup Application</title>
 </head>
 
@@ -41,7 +39,7 @@
                 <!-- Main Search Results Movie Card -->
                 <section class="col hidden" id="searchedMovieCard">
                     <section class="card h-100">
-                        <img src="" class="card-img-top mainSearchImage" id="searchedMovieImage">
+                        <img src="" class="card-img-top searchImages" id="searchedMovieImage">
                         <section class="card-body" id="searchedMovieBody">
                           <h5 class="card-title" id="searchedMovieTitle">Search Results</h5>
                         </section>
@@ -59,17 +57,10 @@
         </section>
 
         <!-- Container for Recommendations based on User Search -->
-        <section class="container pb-5 hidden", id="recommendationCards">
+        <section class="container pb-5", id="recContainer">
             <section class="row" id="">
-                <!-- Main Search Results Movie Card -->
-                <section class="col" id="">
-                    <section class="card h-100">
-                        <img src="..." class="card-img-top" alt="...">
-                        <section class="card-body">
-                          <h5 class="card-title">Recommended Movies</h5>
-                          <p class="card-text">This is where the Movie Recommendations Cards will go</p>
-                        </section>
-                    </section>
+                <!-- Movie Recommendation Cards -->
+                <section class="row" id="recommendationSection">
                 </section>
             </section>
         </section>
