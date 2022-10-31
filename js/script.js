@@ -15,17 +15,18 @@ var searchedMovieCard = document.querySelector('#searchedMovieCard');
 var searchedMovieImage = document.querySelector('#searchedMovieImage');
 var searchedMovieTitle = document.querySelector('#searchedMovieTitle');
 var searchedMovieBody = document.querySelector('#searchedMovieBody');
-var similarMovieCards = document.querySelector('#similarMovieCards');
+var recContainer = document.querySelector('#recContainer');
+var recommendationSection = document.querySelector('#recommendationSection');
 var searchHistoryArr = [];
 //Create an event handler for when the user clicks the search button
 var searchButtonHandler = function(event) {
     event.preventDefault();
     //Get the value of the users search
     var userSearchValue = userSearchInput.value.trim();
-    console.log(userSearchValue);
 
     //Call the function to the get movie ID if it's the user does not hit search without inputting a value (can also easily add history buttons here later on)
     if (userSearchValue) {
+        console.log(userSearchValue);
         //Save search in local storage and create search history button
         searchHistoryArr.push(userSearchValue);
         localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr));
@@ -41,12 +42,13 @@ var searchButtonHandler = function(event) {
         //Call the getMovieID function and reset the search text area to blank
         getSearchedMovie(userSearchValue);
         //Reset the search input to blank
-        userSearchInput.value = "";
+        //userSearchInput.value = "";
     } 
     //Need to update this to be a modal instead of an alert but using that as a placeholder for now
     else {
         alert("Please enter a valid Movie title")
     }
+
 };
 
 //Create a function that will return the Movie ID
@@ -65,9 +67,6 @@ function getSearchedMovie(userSearchValue) {
             var movieDescrip = response.results[0].overview;
             var movieImg = response.results[0].poster_path;
             var releaseDate = dayjs(response.results[0].release_date).format("MM/DD/YYYY");
-            console.log(movieId);
-            console.log(movieTitle);
-            console.log(movieImg);
 
             //Update the movie Image
             searchedMovieImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieImg);
@@ -82,9 +81,69 @@ function getSearchedMovie(userSearchValue) {
             var release = document.createElement('p');
             release.innerHTML = "<strong>Release Date: </strong>" + releaseDate;
             searchedMovieBody.appendChild(release);
-            //Unhid the searched movie card
+            //Unhide the searched movie card
             searchedMovieCard.classList.remove("hidden");
+            //Return a fetch request to find similar movies using the movieID
+            return fetch(tmdbGetRecommendationsUrl + movieId + "/recommendations?api_key=" + apiKey + "&language=en-US&page=1")
         })
+        .then(function(response) {
+            // return response in JSON format
+            return response.json();
+        })
+        .then(function(response) {
+            //console.log(response);
+            displayRecommendations(response);
+        })
+};
+
+function displayRecommendations(response) {
+    console.log(response);
+    //Create a for loop to go through the array of recommendations
+    for (i = 0; i < 5; i++) {
+        //update variables
+        var movieID = response.results[i].id;
+        var movieTitle = response.results[i].title;
+        var movieDescrip = response.results[i].overview;
+        var movieImg = response.results[i].poster_path;
+        var releaseDate = dayjs(response.results[i].release_date).format("MM/DD/YYYY");
+
+        //Add a section element and give it the class card/id and append
+        var newCard = document.createElement('section');
+        newCard.setAttribute("class", "card col gih-100");
+        newCard.setAttribute("id", "recommendationCards");
+        recommendationSection.append(newCard);
+
+        //Create an image element/attributes and add movie poster
+        var recImg = document.createElement('img');
+        recImg.setAttribute("class","card-img-top searchImages");
+        recImg.setAttribute("alt", movieTitle);
+        recImg.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieImg);
+        newCard.appendChild(recImg);
+        
+        //Create another section element for the card-body and append
+        var recBody = document.createElement('section');
+        recBody.setAttribute("class", "card-body");
+        newCard.appendChild(recBody);
+
+        //Create card title header and append to body
+        var recTitle = document.createElement("h5")
+        recTitle.setAttribute("class", "card-title");
+        recTitle.innerHTML = movieTitle;
+        recBody.appendChild(recTitle);
+
+        //Create an element to store the description and append to the body
+        var recDescrip = document.createElement('p');
+        recDescrip.innerHTML = "<strong>Description: </strong>" + movieDescrip;
+        recBody.appendChild(recDescrip);
+
+        //Create an element to store the release date and append to the body
+        var recRelease = document.createElement('p');
+        recRelease.innerHTML = "<strong>Release Date: </strong>" + releaseDate;
+        recBody.appendChild(recRelease);
+
+        //Unhide the Recommendations Section
+        recContainer.classList.remove("hidden");
+    }
 };
 
 userSearchForm.addEventListener("submit", searchButtonHandler);
