@@ -9,9 +9,14 @@ var tmdbGetRecommendationsUrl = 'https://api.themoviedb.org/3/movie/';
 var userSearchInput = document.querySelector('#userSearchInput');
 var userSearchForm = document.querySelector('#userSearchForm');
 var searchBtn = document.querySelector('#searchBtn');
+var searchHistoryCard = document.querySelector('#searchHistoryCard');
+var searchHistoryButtons = document.querySelector('#searchHistoryButtons');
 var searchedMovieCard = document.querySelector('#searchedMovieCard');
+var searchedMovieImage = document.querySelector('#searchedMovieImage');
+var searchedMovieTitle = document.querySelector('#searchedMovieTitle');
+var searchedMovieBody = document.querySelector('#searchedMovieBody');
 var similarMovieCards = document.querySelector('#similarMovieCards');
-
+var searchHistoryArr = [];
 //Create an event handler for when the user clicks the search button
 var searchButtonHandler = function(event) {
     event.preventDefault();
@@ -21,8 +26,21 @@ var searchButtonHandler = function(event) {
 
     //Call the function to the get movie ID if it's the user does not hit search without inputting a value (can also easily add history buttons here later on)
     if (userSearchValue) {
-        //Call the getMovieID function
+        //Save search in local storage and create search history button
+        searchHistoryArr.push(userSearchValue);
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistoryArr));
+        
+        //Create a new button element and append it
+        var newHistoryBtn = document.createElement('button');
+        newHistoryBtn.className = "btn";
+        newHistoryBtn.setAttribute("movieName", userSearchValue);
+        newHistoryBtn.innerHTML = userSearchValue;
+        searchHistoryButtons.appendChild(newHistoryBtn);
+        searchHistoryCard.classList.remove("hidden");
+
+        //Call the getMovieID function and reset the search text area to blank
         getMovieId(userSearchValue);
+        userSearchInput.value = "";
         //Reset the search input to blank
         userSearchInput.value = ""
     } 
@@ -42,7 +60,32 @@ function getMovieId(userSearchValue) {
         })
         .then(function (response) {
             console.log(response);
-        });
+            //create variables to store from the API response
+            var movieId = response.results[0].id;
+            var movieTitle = response.results[0].title;
+            var movieDescrip = response.results[0].overview;
+            var movieImg = response.results[0].poster_path;
+            var releaseDate = dayjs(response.results[0].release_date).format("MM/DD/YYYY");
+            console.log(movieId);
+            console.log(movieTitle);
+            console.log(movieImg);
+
+            //Update the movie Image
+            searchedMovieImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieImg);
+            searchedMovieImage.setAttribute("alt", movieTitle)
+            //Update the movie Title
+            searchedMovieTitle.innerHTML = movieTitle;
+            //Create an element to store the description and append to the body
+            var newDescrip = document.createElement('p');
+            newDescrip.innerHTML = "<strong>Description: </strong>" + movieDescrip;
+            searchedMovieBody.appendChild(newDescrip);
+            //Create an element to store the release date
+            var release = document.createElement('p');
+            release.innerHTML = "<strong>Release Date: </strong>" + releaseDate;
+            searchedMovieBody.appendChild(release);
+            //Unhid the searched movie card
+            searchedMovieCard.classList.remove("hidden");
+        })
 };
 
 userSearchForm.addEventListener("submit", searchButtonHandler);
