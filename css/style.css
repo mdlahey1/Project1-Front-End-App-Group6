@@ -6,7 +6,7 @@
     --hoverColor: #DA0000;
     --light-dark: #940000;
     --dark:#0a0a0a;
-    --mid-dark: #181818;
+    --mid-dark:#181818;
     --background: #232323;
     --border-radius: .3rem;
 }
@@ -30,13 +30,13 @@
     outline: none;
     background-color: var(--light-dark);
     box-shadow: 3px 3px var(--dark);
-    transform: translate(-1px, -1px);
+    transform: translate(0px, 0px);
 }
   
 .btn:hover {
     color: var(--primary);
     background-color: var(--hoverColor);
-    transform: translate(0, 0);
+    transform: translate(1px, 1px);
     box-shadow: 2px 2px var(--dark);
 }
   
@@ -46,15 +46,14 @@
 
 /* Image Sizing */
 .searchImages {
+    display: block;
+    max-width: 600px;
+    max-height: 800px;
     width: 100%;
-    height: 30vw;
+    height: auto;
 }
 
-.col {
-    padding:0px;
-}
 .card-body {
-
     background-color: var(--mid-dark);
 }
 
@@ -72,15 +71,17 @@ body {
 }
 
 header {
-
     display:block;
     height: 300px;
     padding: 35px;
 }
+
 /* This makes the "film" part red */
+
 h1 red {
     color: #DA0000;
 }
+
 h1 {
     font-size: 100px;
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -89,12 +90,9 @@ h1 {
     background-size:auto;
     background-repeat: no-repeat;
 }   
+
 h2 {
     font-size: 24px;
-}
-
-h5 {
-    text-align:center;
 }
 
 footer {
@@ -103,7 +101,6 @@ footer {
     height:200px;
     margin-top: 100px;
     font-size: 16px;
-
 }
 
 /* styling for every element in footer element */
@@ -118,5 +115,11 @@ footer {
     text-align: center;
     border-bottom: 2px solid white;
     padding: 4px;
+}
 
+/* search button sizing */
+
+#userSearchInput {
+    border-radius: .3rem;
+    box-shadow: 3px 3px var(--dark);
 }
