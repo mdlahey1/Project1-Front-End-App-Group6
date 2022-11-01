@@ -16,6 +16,10 @@
     display: none;
 }
 
+.modal{
+    color: var(--hoverColor);
+}
+
 /* Button Styling (need to update to fit our layout */
 .btn {
     font-size: 1.3rem;
