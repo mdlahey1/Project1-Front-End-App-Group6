@@ -3,7 +3,7 @@ apiKey = 'a6091da1f77938caf706363106cf0289';
 var tmdbGetIdUrl ='https://api.themoviedb.org/3/search/movie?api_key=';
 var tmdbGetDetailsUrl = 'https://api.themoviedb.org/3/movie/'
 var tmdbGetRecommendationsUrl = 'https://api.themoviedb.org/3/movie/';
-var omdbGetDetailsUrl = 'http://www.omdbapi.com/?apikey=14195f60&t=';
+var omdbGetDetailsUrl = 'https://www.omdbapi.com/?apikey=14195f60&t=';
 
 
 //Element variables in order to appendchild and add the searched movie/TV show Card and similar Movie/TV show recommendation Cards
