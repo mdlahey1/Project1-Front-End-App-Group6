@@ -27,7 +27,7 @@ var searchButtonHandler = function(event) {
     event.preventDefault();
     //Get the value of the users search
     var userSearchValue = userSearchInput.value.trim();
-    console.log(userSearchValue);
+    // console.log(userSearchValue);
     myList = JSON.parse(localStorage.getItem("movieHistory"))
     //Call the function to the get movie ID as long as the user does not hit search without inputting a value
     if (userSearchValue) {
@@ -88,9 +88,9 @@ function getSearchedMovie(userSearchValue) {
             return response.json();
         })
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
             var testMovieSearch = response.results;
-            console.log(testMovieSearch);
+            // console.log(testMovieSearch);
             //Checks to make sure there is a valid respons
             if (testMovieSearch.length === 0) {
                 errorMessage.innerHTML = "No Movies found matching that title, please try a different Movie Title";

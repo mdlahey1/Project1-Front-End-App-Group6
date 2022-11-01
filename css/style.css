@@ -23,9 +23,9 @@
 /* Button Styling (need to update to fit our layout */
 .btn {
     font-size: 1.4rem;
-    font-family: 'Teko', sans-serif;
+    font-family: 'Mukta', sans-serif;
     text-decoration:none;
-    padding: 6px 10px;
+    padding: 6px 12px;
     margin: 5px;
     width: 100%;
     display: block;
@@ -51,6 +51,7 @@
 }
 
 /* Image Sizing */
+
 .searchImages {
     display: block;
     max-width: 644px;
@@ -75,7 +76,7 @@ body {
 
 .card-body p {
     font-size: 1.3rem;
-    font-family: 'Teko', sans-serif;
+    font-family: 'Mukta', sans-serif;
 }
 
 h5 {
@@ -106,7 +107,7 @@ h1 {
 
 h2 {
     font-size: 34px;
-    font-family: 'Teko', sans-serif;
+    font-family: 'Mukta', sans-serif;
 }
 
 footer {
@@ -115,14 +116,14 @@ footer {
     height:200px;
     margin-top: 100px;
     font-size: 20px;
-    font-family: 'Teko', sans-serif;
+    font-family: 'Mukta', sans-serif;
 }
 
 /* styling for every element in footer element */
 
 #bottom-footer {
     text-align: center;
-    font-family: 'Teko', sans-serif;
+    font-family: 'Mukta', sans-serif;
     font-size: 20px;
 }
 
@@ -132,7 +133,7 @@ footer {
     text-align: center;
     border-bottom: 1px solid white;
     padding: 4px;
-    font-family: 'Teko', sans-serif;
+    font-family: 'Mukta', sans-serif;
 }
 
 /* search button sizing */
@@ -140,7 +141,7 @@ footer {
 #userSearchInput {
     border-radius: 100px;
     box-shadow: 3px 3px var(--dark);
-    height: 46px;
-    font-family: 'Teko', sans-serif;
+    height: 52px;
+    font-family: 'Mukta', sans-serif;
     font-size: 1.4rem;
 }
