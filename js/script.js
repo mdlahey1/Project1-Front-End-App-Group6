@@ -17,40 +17,60 @@ var searchedMovieTitle = document.querySelector('#searchedMovieTitle');
 var searchedMovieBody = document.querySelector('#searchedMovieBody');
 var recContainer = document.querySelector('#recContainer');
 var recommendationSection = document.querySelector('#recommendationSection');
+var localStorageArr = [];
 
 //Create an event handler for when the user clicks the search button
 var searchButtonHandler = function(event) {
     event.preventDefault();
     //Get the value of the users search
     var userSearchValue = userSearchInput.value.trim();
-
-    //Call the function to the get movie ID if it's the user does not hit search without inputting a value (can also easily add history buttons here later on)
+    myList = JSON.parse(localStorage.getItem("movieHistory"))
+    
+    //Call the function to the get movie ID as long as the user does not hit search without inputting a value
     if (userSearchValue) {
-        //Save search in local storage and create search history button
-        var myList = JSON.parse(localStorage.getItem("movieHistory"))
-        myList.push(userSearchValue);
-        var updatedHistory = JSON.stringify(myList);
-        window.localStorage.setItem("movieHistory", updatedHistory);
-        
-        //Create a new button element and append it
-        var newHistoryBtn = document.createElement('button');
-        newHistoryBtn.className = "btn";
-        newHistoryBtn.setAttribute("id", userSearchValue);
-        newHistoryBtn.innerHTML = userSearchValue;
-        searchHistoryButtons.appendChild(newHistoryBtn);
-        searchHistoryCard.classList.remove("hidden");
 
-        //Call the getMovieID function and reset the search text area to blank
-        getSearchedMovie(userSearchValue);
-        //Reset the search input to blank
-        userSearchInput.value = "";
-    } 
-    //Need to update this to be a modal instead of an alert but using that as a placeholder for now
-    else {
-        alert("Please enter a valid Movie title")
+        if (!myList) {
+            localStorageArr.push(userSearchValue);
+            var updatedHistory = JSON.stringify(localStorageArr);
+            window.localStorage.setItem("movieHistory", updatedHistory);
+            //Create a new button element and append it
+            var newHistoryBtn = document.createElement('button');
+            newHistoryBtn.className = "btn";
+            newHistoryBtn.setAttribute("id", userSearchValue);
+            newHistoryBtn.innerHTML = userSearchValue;
+            searchHistoryButtons.appendChild(newHistoryBtn);
+            searchHistoryCard.classList.remove("hidden");
+        } else if (!myList.includes(userSearchValue)) {
+            //Save search in local storage and create search history button
+            myList = JSON.parse(localStorage.getItem("movieHistory"))
+            myList.push(userSearchValue);
+            var updatedHistory = JSON.stringify(myList);
+            window.localStorage.setItem("movieHistory", updatedHistory);
+            
+            //Create a new button element and append it
+            var newHistoryBtn = document.createElement('button');
+            newHistoryBtn.className = "btn";
+            newHistoryBtn.setAttribute("id", userSearchValue);
+            newHistoryBtn.innerHTML = userSearchValue;
+            searchHistoryButtons.appendChild(newHistoryBtn);
+            searchHistoryCard.classList.remove("hidden");
+
+            //Call the getMovieID function and reset the search text area to blank
+            getSearchedMovie(userSearchValue);
+            //Reset the search input to blank
+            userSearchInput.value = "";
+        } 
+        //Need to update this to be a modal instead of an alert but using that as a placeholder for now
+    } else {
+            alert("Please enter a valid Movie title")
     }
-
+    //Call the getMovieID function and reset the search text area to blank
+    getSearchedMovie(userSearchValue);
+    //Reset the search input to blank
+    userSearchInput.value = "";
 };
+
+
 
 //Create a function that will return the Movie ID
 function getSearchedMovie(userSearchValue) {  
