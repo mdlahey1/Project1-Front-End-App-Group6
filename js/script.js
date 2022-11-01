@@ -67,7 +67,8 @@ var searchButtonHandler = function(event) {
             openModal()
             return;
     }
-    //Call the getMovieID function and reset the search text area to blank
+    //Call the getMovieID function and reset the search text area to blank/clear Past Movie Info
+    searchedMovieBody.innerHTML = "";
     getSearchedMovie(userSearchValue);
     //Reset the search input to blank
     userSearchInput.value = "";
@@ -94,17 +95,12 @@ function getSearchedMovie(userSearchValue) {
                 return;
             };
 
-                //Clear Past Movie Info
-                searchedMovieBody.innerHTML = "";
-
                 //create variables to store from the API response
                 var movieId = response.results[0].id;
                 var movieTitle = response.results[0].title;
                 var movieDescrip = response.results[0].overview;
                 var movieImg = response.results[0].poster_path;
                 var releaseDate = dayjs(response.results[0].release_date).format("MM/DD/YYYY");
-
-
 
                 //Update the movie Image
                 searchedMovieImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieImg);
@@ -204,7 +200,7 @@ function displayRecommendations(response) {
         recContainer.classList.remove("hidden");
     };
     
-    getRatings(movieTitle);
+    //getRatings(movieTitle);
 };
 
 //Function that pulls existing search history from local storage if applicable
@@ -230,6 +226,8 @@ function loadHistory() {
 var searchHistoryClickHandler = function(event) {
     var movieSearch = event.target.getAttribute("id");
     if (movieSearch) {
+        //Clear Past Movie Info & Rerun Search
+        searchedMovieBody.innerHTML = "";
         getSearchedMovie(movieSearch);
     };
 };
