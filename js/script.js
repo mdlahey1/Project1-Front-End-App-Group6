@@ -16,6 +16,7 @@ var searchedMovieImage = document.querySelector('#searchedMovieImage');
 var searchedMovieTitle = document.querySelector('#searchedMovieTitle');
 var searchedMovieBody = document.querySelector('#searchedMovieBody');
 var recContainer = document.querySelector('#recContainer');
+var noRecs = document.querySelector('#noRecs');
 var recommendationSection = document.querySelector('#recommendationSection');
 var errorMessage = document.querySelector('#errorMessage');
 var modalCloseBtn = document.querySelector('#modalCloseBtn');
@@ -88,30 +89,38 @@ function getSearchedMovie(userSearchValue) {
         })
         .then(function (response) {
             console.log(response);
-            //create variables to store from the API response
-            var movieId = response.results[0].id;
-            var movieTitle = response.results[0].title;
-            var movieDescrip = response.results[0].overview;
-            var movieImg = response.results[0].poster_path;
-            var releaseDate = dayjs(response.results[0].release_date).format("MM/DD/YYYY");
+            var testMovieSearch = response.results;
+            console.log(testMovieSearch);
+            //Checks to make sure there is a valid respons
+            if (testMovieSearch.length === 0) {
+                errorMessage.innerHTML = "No Movies found matching that title, please try a different Movie Title";
+                openModal()
+                return;
+            };
+                //create variables to store from the API response
+                var movieId = response.results[0].id;
+                var movieTitle = response.results[0].title;
+                var movieDescrip = response.results[0].overview;
+                var movieImg = response.results[0].poster_path;
+                var releaseDate = dayjs(response.results[0].release_date).format("MM/DD/YYYY");
 
-            //Update the movie Image
-            searchedMovieImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieImg);
-            searchedMovieImage.setAttribute("alt", movieTitle)
-            //Update the movie Title
-            searchedMovieTitle.innerHTML = movieTitle;
-            //Create an element to store the description and append to the body
-            var newDescrip = document.createElement('p');
-            newDescrip.innerHTML = "<strong>Description: </strong>" + movieDescrip;
-            searchedMovieBody.appendChild(newDescrip);
-            //Create an element to store the release date
-            var release = document.createElement('p');
-            release.innerHTML = "<strong>Release Date: </strong>" + releaseDate;
-            searchedMovieBody.appendChild(release);
-            //Unhide the searched movie card
-            searchedMovieCard.classList.remove("hidden");
-            //Return a fetch request to find similar movies using the movieID
-            return fetch(tmdbGetRecommendationsUrl + movieId + "/recommendations?api_key=" + apiKey + "&language=en-US&page=1")
+                //Update the movie Image
+                searchedMovieImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieImg);
+                searchedMovieImage.setAttribute("alt", movieTitle)
+                //Update the movie Title
+                searchedMovieTitle.innerHTML = movieTitle;
+                //Create an element to store the description and append to the body
+                var newDescrip = document.createElement('p');
+                newDescrip.innerHTML = "<strong>Description: </strong>" + movieDescrip;
+                searchedMovieBody.appendChild(newDescrip);
+                //Create an element to store the release date
+                var release = document.createElement('p');
+                release.innerHTML = "<strong>Release Date: </strong>" + releaseDate;
+                searchedMovieBody.appendChild(release);
+                //Unhide the searched movie card
+                searchedMovieCard.classList.remove("hidden");
+                //Return a fetch request to find similar movies using the movieID
+                return fetch(tmdbGetRecommendationsUrl + movieId + "/recommendations?api_key=" + apiKey + "&language=en-US&page=1")
         })
         .then(function(response) {
             // return response in JSON format
@@ -130,8 +139,23 @@ function displayRecommendations(response) {
         recommendationSection.innerHTML = "";
     };   
 
+    //Tests to see if there are no recommendation results
+    var testRecSearch = response.results;
+    if (testRecSearch.length === 0) {
+        var noRecsMessage = document.createElement('p');
+        noRecsMessage.innerHTML = "Apologies we could not find any recommendations for this title";
+        noRecs.appendChild(noRecsMessage);
+    };
+
+    //Tests to see if there are less than 5 recommendation results
+    if (testRecSearch.length < 5) {
+        newRecNumber = testRecSearch.length;
+    } else {
+        newRecNumber = 5
+    }
+    
     //Create a for loop to go through the array of recommendations
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < newRecNumber; i++) {
         //update variables
         var movieID = response.results[i].id;
         var movieTitle = response.results[i].title;
