@@ -3,6 +3,7 @@ apiKey = 'a6091da1f77938caf706363106cf0289';
 var tmdbGetIdUrl ='https://api.themoviedb.org/3/search/movie?api_key=';
 var tmdbGetDetailsUrl = 'https://api.themoviedb.org/3/movie/'
 var tmdbGetRecommendationsUrl = 'https://api.themoviedb.org/3/movie/';
+var omdbGetDetailsUrl = 'http://www.omdbapi.com/?apikey=14195f60&t=';
 
 
 //Element variables in order to appendchild and add the searched movie/TV show Card and similar Movie/TV show recommendation Cards
@@ -58,11 +59,6 @@ var searchButtonHandler = function(event) {
             newHistoryBtn.innerHTML = userSearchValue;
             searchHistoryButtons.appendChild(newHistoryBtn);
             searchHistoryCard.classList.remove("hidden");
-
-            //Call the getMovieID function and reset the search text area to blank
-            getSearchedMovie(userSearchValue);
-            //Reset the search input to blank
-            userSearchInput.value = "";
         } 
         //Need to update this to be a modal instead of an alert but using that as a placeholder for now
     } else {
@@ -71,7 +67,8 @@ var searchButtonHandler = function(event) {
             openModal()
             return;
     }
-    //Call the getMovieID function and reset the search text area to blank
+    //Call the getMovieID function and reset the search text area to blank/clear Past Movie Info
+    searchedMovieBody.innerHTML = "";
     getSearchedMovie(userSearchValue);
     //Reset the search input to blank
     userSearchInput.value = "";
@@ -97,6 +94,7 @@ function getSearchedMovie(userSearchValue) {
                 openModal()
                 return;
             };
+
                 //create variables to store from the API response
                 var movieId = response.results[0].id;
                 var movieTitle = response.results[0].title;
@@ -107,6 +105,7 @@ function getSearchedMovie(userSearchValue) {
                 //Update the movie Image
                 searchedMovieImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieImg);
                 searchedMovieImage.setAttribute("alt", movieTitle)
+
                 //Update the movie Title
                 searchedMovieTitle.innerHTML = movieTitle;
                 //Create an element to store the description and append to the body
@@ -199,7 +198,9 @@ function displayRecommendations(response) {
 
         //Unhide the Recommendations Section
         recContainer.classList.remove("hidden");
-    }
+    };
+    
+    //getRatings(movieTitle);
 };
 
 //Function that pulls existing search history from local storage if applicable
@@ -218,10 +219,15 @@ function loadHistory() {
     }
 };
 
-//Research a movie by hitting one of the search history buttons
+//Fetch ratings details from OMDb Api
+
+
+//Re-search a movie by hitting one of the search history buttons
 var searchHistoryClickHandler = function(event) {
     var movieSearch = event.target.getAttribute("id");
     if (movieSearch) {
+        //Clear Past Movie Info & Rerun Search
+        searchedMovieBody.innerHTML = "";
         getSearchedMovie(movieSearch);
     };
 };
