@@ -50,8 +50,11 @@
     height: 30vw;
 }
 
+.col {
+    padding:0px;
+}
 .card-body {
-    background-color: var(--background);
+
     background-color: var(--mid-dark);
 }
 
@@ -90,6 +93,9 @@ h2 {
     font-size: 24px;
 }
 
+h5 {
+    text-align:center;
+}
 
 footer {
     background-color: var(--background);
@@ -97,6 +103,7 @@ footer {
     height:200px;
     margin-top: 100px;
     font-size: 16px;
+
 }
 
 /* styling for every element in footer element */
@@ -111,4 +118,5 @@ footer {
     text-align: center;
     border-bottom: 2px solid white;
     padding: 4px;
+
 }
