@@ -1,8 +1,28 @@
-var posterContainer = document.querySelector('#posters')
-var requestUrl = 'https://api.themoviedb.org/3/search/movie?api_key=a6091da1f77938caf706363106cf0289&query=Avengers&include_image_language';
-var ottKey = '62e4d11a06msh5de2a416a1456c1p1475fajsn6107c95aedbc';
+var posterContainer = document.querySelector('#posters');
+var titleSearch = 'Avengers'
+var requestUrl = `https://api.themoviedb.org/3/search/movie?api_key=a6091da1f77938caf706363106cf0289&query=${titleSearch}&include_image_language`;
+var ottKey = 'dcd790987emshccdebd291c2c399p165e18jsn1dcbb480c6f5';
+
+var ottUrl = `https://ott-details.p.rapidapi.com/search?title=${titleSearch}&page=1`;
 
 var genreObj = {};
+
+function getGenre (url, i, title) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': ottKey,
+            'X-RapidAPI-Host': 'ott-details.p.rapidapi.com'
+        }
+    };
+    
+    fetch(url, options)
+        .then(response => response.json())
+        .then(response => storeGenre(response.results, i, title))
+        .catch(err => console.error(err));
+    
+}
+
 
 function getApi(url) {
     fetch(url)
@@ -18,11 +38,28 @@ function getStreaming(url, i) {
     .catch(err => console.error(err));
 };
 
+function storeGenre (ottResults, i, title) {
+    
+    var genreObj = {};
+
+    for (let i = 0; i < ottResults.length; i++) {
+
+        var titleKey = ottResults[i].title;
+        var genresArrayValue = ottResults[i].genre;
+        
+        genreObj[titleKey] = genresArrayValue;
+    }
+
+    displayGenre(genreObj, i, title);
+
+}
+
 function displayPoster(posterResults) {
 
     for (let i = 0; i < posterResults.length; i++){
 
-        var imagePath = posterResults[i].poster_path
+        var movieTitle = posterResults[i].title;
+        var imagePath = posterResults[i].poster_path;
 
         var card = document.createElement('div');
         var imageUrl = `https://image.tmdb.org/t/p/original${imagePath}`;
@@ -42,6 +79,10 @@ function displayPoster(posterResults) {
         var movieID = posterResults[i].id;
         var fetchProv = `https://api.themoviedb.org/3/movie/${movieID}/watch/providers?api_key=a6091da1f77938caf706363106cf0289`;
         getStreaming(fetchProv, i);
+        if (i == 0) {
+            getGenre(ottUrl, i, movieTitle)
+        }
+        
         
         posterContainer.append(card);
 
@@ -80,6 +121,26 @@ function displayIcon(flatRateResults, j) {
         card.append(noneAvailable)
     }
 
+}
+
+function displayGenre (obj, j, title) {
+
+    var card = document.getElementById(`col-${j}`);
+
+    try {
+
+        var genreArray = obj[title]; 
+        var genreDisplay = document.createElement('h5');
+        genreDisplay.innerHTML = `Genres: ${genreArray}`
+
+        card.append(genreDisplay);
+
+    } catch(err) {
+
+        var noneAvailable = document.createElement('h6');
+        noneAvailable.innerHTML = 'Genre not available for this movie';
+        card.append(noneAvailable)
+    }
 }
 
 getApi(requestUrl);
