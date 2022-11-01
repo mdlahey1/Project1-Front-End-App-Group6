@@ -14,7 +14,6 @@ var searchHistoryCard = document.querySelector('#searchHistoryCard');
 var searchHistoryButtons = document.querySelector('#searchHistoryButtons');
 var searchedMovieCard = document.querySelector('#searchedMovieCard');
 var searchedMovieImage = document.querySelector('#searchedMovieImage');
-var searchedMovieTitle = document.querySelector('#searchedMovieTitle');
 var searchedMovieBody = document.querySelector('#searchedMovieBody');
 var recContainer = document.querySelector('#recContainer');
 var noRecs = document.querySelector('#noRecs');
@@ -106,8 +105,13 @@ function getSearchedMovie(userSearchValue) {
                 searchedMovieImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + movieImg);
                 searchedMovieImage.setAttribute("alt", movieTitle)
 
-                //Update the movie Title
+                //Create an element to store the movie Title and append to the bodyUpdate the movie Title
+                var searchedMovieTitle = document.createElement('h5');
+                searchedMovieTitle.setAttribute("class", "card-title");
+                searchedMovieTitle.setAttribute("id", "searchedMovieTitle");
                 searchedMovieTitle.innerHTML = movieTitle;
+                searchedMovieBody.appendChild(searchedMovieTitle);
+
                 //Create an element to store the description and append to the body
                 var newDescrip = document.createElement('p');
                 newDescrip.innerHTML = "<strong>Description: </strong>" + movieDescrip;
@@ -200,26 +204,59 @@ function displayRecommendations(response) {
         recContainer.classList.remove("hidden");
     };
     
-    //getRatings(movieTitle);
-};
-
-//Function that pulls existing search history from local storage if applicable
-function loadHistory() {
-    var listOfMovies = window.localStorage.getItem("movieHistory");
-    if(listOfMovies) {
-        var existingHistory = JSON.parse(listOfMovies);
-        for (i = 0; i < existingHistory.length; i++) {
-            var newBtn = document.createElement('button');
-            newBtn.className = "btn";
-            newBtn.setAttribute("id", existingHistory[i]);
-            newBtn.innerHTML = existingHistory[i];
-            searchHistoryButtons.appendChild(newBtn);
-            searchHistoryCard.classList.remove("hidden");
-        }
-    }
+    getRatings();
 };
 
 //Fetch ratings details from OMDb Api
+function getRatings() {
+    //Get the searched title name
+    var title = document.querySelector('#searchedMovieTitle').innerHTML;
+    console.log(title);
+    //Update the root URL to incorporate the API key and User Search Value
+    var fetchUrl = omdbGetDetailsUrl + title;
+    console.log(fetchUrl);
+    fetch(fetchUrl)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (response) {
+            console.log(response);
+            //Create variables for genre, movie-rated, imdb rating, rotten tomatoes rating, and run time
+            var genre = response.Genre;
+            var rated = response.Rated;
+            var rottenTomatoes = response.Ratings[1].Value;
+            var imdb = response.imdbRating;
+            var runTime = response.Runtime;
+            // console.log(genre);
+            // console.log(rated);
+            // console.log(rottenTomatoes);
+            // console.log(imdb);
+            // console.log(runTime);
+
+            //Create genre element
+            var genreEl = document.createElement('p');
+            genreEl.innerHTML = "<strong>Genre: </strong>" + genre;
+            searchedMovieBody.appendChild(genreEl);
+
+            //Create rated element
+            var ratedEl = document.createElement('p');
+            ratedEl.innerHTML = "<strong>Rated: </strong>" + rated;
+            searchedMovieBody.appendChild(ratedEl);
+
+            //Create run time element
+            var runTimeEl = document.createElement('p');
+            runTimeEl.innerHTML = "<strong>Run-Time: </strong>" + runTime;
+            searchedMovieBody.appendChild(runTimeEl);
+
+            //Create Rotten Tomatoes and IMDB element
+            var rottenTomatoesIMDBEl = document.createElement('p');
+            imgRTEl = "<img src='./assets/rottenTomatoesLogo.png' width='20' height='auto'>"
+            imgIMDBEl = "<img src='./assets/imdbLogo.jpg' width='20' height='auto'>"
+            rottenTomatoesIMDBEl.innerHTML = imgRTEl + " " + rottenTomatoes + "     " + imgIMDBEl + " " + imdb;
+            searchedMovieBody.appendChild(rottenTomatoesIMDBEl);
+
+        })
+};
 
 
 //Re-search a movie by hitting one of the search history buttons
@@ -252,6 +289,22 @@ modalCloseBtn.addEventListener("click", closeModal);
 
 //Event listener for if the user hits one of the search history buttons
 searchHistoryButtons.addEventListener("click", searchHistoryClickHandler);
+
+//Function that pulls existing search history from local storage if applicable
+function loadHistory() {
+    var listOfMovies = window.localStorage.getItem("movieHistory");
+    if(listOfMovies) {
+        var existingHistory = JSON.parse(listOfMovies);
+        for (i = 0; i < existingHistory.length; i++) {
+            var newBtn = document.createElement('button');
+            newBtn.className = "btn";
+            newBtn.setAttribute("id", existingHistory[i]);
+            newBtn.innerHTML = existingHistory[i];
+            searchHistoryButtons.appendChild(newBtn);
+            searchHistoryCard.classList.remove("hidden");
+        }
+    }
+};
 
 //Call function that loads existing local storage if applicable
 loadHistory();
