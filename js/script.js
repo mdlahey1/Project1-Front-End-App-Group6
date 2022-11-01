@@ -7,7 +7,6 @@ var tmdbGetRecommendationsUrl = 'https://api.themoviedb.org/3/movie/';
 
 //Element variables in order to appendchild and add the searched movie/TV show Card and similar Movie/TV show recommendation Cards
 var userSearchInput = document.querySelector('#userSearchInput');
-console.log(userSearchInput);
 var userSearchForm = document.querySelector('#userSearchForm');
 var searchBtn = document.querySelector('#searchBtn');
 var searchHistoryCard = document.querySelector('#searchHistoryCard');
@@ -18,7 +17,7 @@ var searchedMovieTitle = document.querySelector('#searchedMovieTitle');
 var searchedMovieBody = document.querySelector('#searchedMovieBody');
 var recContainer = document.querySelector('#recContainer');
 var recommendationSection = document.querySelector('#recommendationSection');
-var searchHistoryArr = [];
+
 //Create an event handler for when the user clicks the search button
 var searchButtonHandler = function(event) {
     event.preventDefault();
@@ -27,15 +26,16 @@ var searchButtonHandler = function(event) {
 
     //Call the function to the get movie ID if it's the user does not hit search without inputting a value (can also easily add history buttons here later on)
     if (userSearchValue) {
-        console.log(userSearchValue);
         //Save search in local storage and create search history button
-        searchHistoryArr.push(userSearchValue);
-        localStorage.setItem("movieHistory", JSON.stringify(searchHistoryArr));
+        var myList = JSON.parse(localStorage.getItem("movieHistory"))
+        myList.push(userSearchValue);
+        var updatedHistory = JSON.stringify(myList);
+        window.localStorage.setItem("movieHistory", updatedHistory);
         
         //Create a new button element and append it
         var newHistoryBtn = document.createElement('button');
         newHistoryBtn.className = "btn";
-        newHistoryBtn.setAttribute("movieHistory", userSearchValue);
+        newHistoryBtn.setAttribute("id", userSearchValue);
         newHistoryBtn.innerHTML = userSearchValue;
         searchHistoryButtons.appendChild(newHistoryBtn);
         searchHistoryCard.classList.remove("hidden");
@@ -43,7 +43,7 @@ var searchButtonHandler = function(event) {
         //Call the getMovieID function and reset the search text area to blank
         getSearchedMovie(userSearchValue);
         //Reset the search input to blank
-        //userSearchInput.value = "";
+        userSearchInput.value = "";
     } 
     //Need to update this to be a modal instead of an alert but using that as a placeholder for now
     else {
@@ -155,10 +155,8 @@ function displayRecommendations(response) {
 //Function that pulls existing search history from local storage if applicable
 function loadHistory() {
     var listOfMovies = window.localStorage.getItem("movieHistory");
-    console.log(listOfMovies);
     if(listOfMovies) {
         var existingHistory = JSON.parse(listOfMovies);
-        console.log(existingHistory);
         for (i = 0; i < existingHistory.length; i++) {
             var newBtn = document.createElement('button');
             newBtn.className = "btn";
