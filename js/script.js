@@ -17,6 +17,8 @@ var searchedMovieTitle = document.querySelector('#searchedMovieTitle');
 var searchedMovieBody = document.querySelector('#searchedMovieBody');
 var recContainer = document.querySelector('#recContainer');
 var recommendationSection = document.querySelector('#recommendationSection');
+var errorMessage = document.querySelector('#errorMessage');
+var modalCloseBtn = document.querySelector('#modalCloseBtn');
 var localStorageArr = [];
 
 //Create an event handler for when the user clicks the search button
@@ -24,11 +26,11 @@ var searchButtonHandler = function(event) {
     event.preventDefault();
     //Get the value of the users search
     var userSearchValue = userSearchInput.value.trim();
+    console.log(userSearchValue);
     myList = JSON.parse(localStorage.getItem("movieHistory"))
-    
     //Call the function to the get movie ID as long as the user does not hit search without inputting a value
     if (userSearchValue) {
-
+        //Test to see if this is there is no existing local storage (search has never been run)
         if (!myList) {
             localStorageArr.push(userSearchValue);
             var updatedHistory = JSON.stringify(localStorageArr);
@@ -40,6 +42,7 @@ var searchButtonHandler = function(event) {
             newHistoryBtn.innerHTML = userSearchValue;
             searchHistoryButtons.appendChild(newHistoryBtn);
             searchHistoryCard.classList.remove("hidden");
+        //Test to see if the search value is already in local storage i.e. don't create a button
         } else if (!myList.includes(userSearchValue)) {
             //Save search in local storage and create search history button
             myList = JSON.parse(localStorage.getItem("movieHistory"))
@@ -62,7 +65,10 @@ var searchButtonHandler = function(event) {
         } 
         //Need to update this to be a modal instead of an alert but using that as a placeholder for now
     } else {
-            alert("Please enter a valid Movie title")
+            //alert("Please enter a valid Movie title")
+            errorMessage.innerHTML = "Please enter a valid Movie Title";
+            openModal()
+            return;
     }
     //Call the getMovieID function and reset the search text area to blank
     getSearchedMovie(userSearchValue);
@@ -196,8 +202,23 @@ var searchHistoryClickHandler = function(event) {
     };
 };
 
+//Function that opens the error Modal
+function openModal() {
+    document.querySelector(".modal").style.display = "block";
+    document.querySelector(".modal").classList.add("show");
+};
+
+//Function that closes the error Modal
+function closeModal() {
+    document.querySelector(".modal").style.display = "none";
+    document.querySelector(".modal").classList.remove("show");
+}
+
 //Event listener for when the user hits the search button
 userSearchForm.addEventListener("submit", searchButtonHandler);
+
+//Even listener for the modal close button
+modalCloseBtn.addEventListener("click", closeModal);
 
 //Event listener for if the user hits one of the search history buttons
 searchHistoryButtons.addEventListener("click", searchHistoryClickHandler);
