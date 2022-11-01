@@ -148,10 +148,10 @@ function displayRecommendations(response) {
     };
 
     //Tests to see if there are less than 5 recommendation results
-    if (testRecSearch.length < 5) {
+    if (testRecSearch.length < 9) {
         newRecNumber = testRecSearch.length;
     } else {
-        newRecNumber = 5
+        newRecNumber = 9
     }
     
     //Create a for loop to go through the array of recommendations
@@ -165,7 +165,7 @@ function displayRecommendations(response) {
 
         //Add a section element and give it the class card/id and append
         var newCard = document.createElement('section');
-        newCard.setAttribute("class", "card col gih-100");
+        newCard.setAttribute("class", "card col-3 p-1 m-1");
         newCard.setAttribute("id", "recommendationCards");
         recommendationSection.append(newCard);
 

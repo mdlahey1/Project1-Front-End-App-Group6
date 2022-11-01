@@ -25,6 +25,7 @@
     font-size: 1.3rem;
     text-decoration:none;
     padding: 6px 10px;
+    margin: 5px;
     width: 100%;
     display: block;
     border-radius: var(--border-radius);
@@ -51,8 +52,8 @@
 .searchImages {
     display: block;
     max-width: 600px;
-    max-height: 800px;
-    width: 100%;
+    max-height: 250px;
+    width: auto;
     height: auto;
 }
 
@@ -69,6 +70,15 @@ body {
     background-color: var(--background);
     color: var(--primary);
 }
+
+.card-body p {
+    font-size: .8rem;
+}
+
+h5 {
+    font-size: 1rem;
+}
+
 
 header {
     display:block;
