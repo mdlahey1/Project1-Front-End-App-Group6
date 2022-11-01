@@ -22,13 +22,15 @@
 
 /* Button Styling (need to update to fit our layout */
 .btn {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-family: 'Teko', sans-serif;
     text-decoration:none;
     padding: 6px 10px;
     margin: 5px;
     width: 100%;
     display: block;
     border-radius: var(--border-radius);
+    border-radius: 100px;
     color: var(--primary);
     border: none;
     outline: none;
@@ -51,8 +53,8 @@
 /* Image Sizing */
 .searchImages {
     display: block;
-    max-width: 600px;
-    max-height: 250px;
+    max-width: 644px;
+    max-height: auto;
     width: auto;
     height: auto;
 }
@@ -61,10 +63,10 @@
     background-color: var(--mid-dark);
 }
 
-#userSearchInput {
-    border-radius: .3rem;
-    box-shadow: 3px 3px var(--dark);
+.card {
+    background-color: #181818;
 }
+
 
 body {
     background-color: var(--background);
@@ -72,11 +74,12 @@ body {
 }
 
 .card-body p {
-    font-size: .8rem;
+    font-size: 1.3rem;
+    font-family: 'Teko', sans-serif;
 }
 
 h5 {
-    font-size: 1rem;
+    font-size: 2rem;
 }
 
 
@@ -94,7 +97,7 @@ h1 red {
 
 h1 {
     font-size: 100px;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: 'Monoton', Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     background-image: url("../assets/squiggle.png");
     background-position: center;
     background-size:auto;
@@ -102,7 +105,8 @@ h1 {
 }   
 
 h2 {
-    font-size: 24px;
+    font-size: 34px;
+    font-family: 'Teko', sans-serif;
 }
 
 footer {
@@ -110,27 +114,33 @@ footer {
     color: var(--primary);
     height:200px;
     margin-top: 100px;
-    font-size: 16px;
+    font-size: 20px;
+    font-family: 'Teko', sans-serif;
 }
 
 /* styling for every element in footer element */
 
 #bottom-footer {
     text-align: center;
+    font-family: 'Teko', sans-serif;
+    font-size: 20px;
 }
 
 /* styling for search history text */
 
 .card-title {
     text-align: center;
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
     padding: 4px;
+    font-family: 'Teko', sans-serif;
 }
 
 /* search button sizing */
 
 #userSearchInput {
-    border-radius: .3rem;
+    border-radius: 100px;
     box-shadow: 3px 3px var(--dark);
-
+    height: 46px;
+    font-family: 'Teko', sans-serif;
+    font-size: 1.4rem;
 }
